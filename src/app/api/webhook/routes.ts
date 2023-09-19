@@ -5,16 +5,15 @@ export const sendTextToMidjourney = async (text: string) => {
   try {
     const response = await axios.post(
       BASE_URL, // Replace with the actual API endpoint
-      {
-        text,
-      },
+      { cmd: "imagine", msg: text },
       {
         headers: AUTH_HEADERS,
       }
     );
 
     // Assuming the API returns a URL to the generated picture, you can access it from response.data
-    const generatedPictureUrl = response.data.pictureUrl;
+    // const generatedPictureUrl = response.data.pictureUrl;
+    const generatedPictureUrl = response.data;
     return generatedPictureUrl;
   } catch (error) {
     console.error("Error sending text to Midjourney API:", error);

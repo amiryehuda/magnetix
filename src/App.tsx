@@ -33,9 +33,10 @@ const App = () => {
   };
 
   const handleSendButtonClick = async () => {
-    // const res = await sendTextToMidjourney(inputText);
+    console.log("res");
+    const res = await sendTextToMidjourney(inputText);
 
-    // console.log(res);
+    console.log(res);
 
     setClicked(true);
     setLoading(true);
