@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "./components/Input/Input";
 import Button from "./components/Button/Button";
 import {
@@ -11,14 +11,8 @@ import {
 import magnetixLogo from "./assets/photos/magnetix-logo.jpg";
 import mockData from "./mock/mock-data.json";
 import Photo from "./components/Photo/Photo";
-import { sendTextToMidjourney } from "./app/api/webhook/routes";
-
-/*
-Your Auth Token: 0066d704-fecc-46a7-aa8e-70f13cc2f55a
-Account ID: qlxzNdultfBp4Y9sMUUd
-Current Period End: Wed Oct 18 2023
-API URL: https://api.thenextleg.io/v2
-*/
+import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
+import { log } from "console";
 
 const App = () => {
   const [inputText, setInputText] = useState<string>("");
@@ -26,24 +20,61 @@ const App = () => {
   const [clicked, setClicked] = useState(false);
   const [photoToRender, setPhotoToRender] = useState<
     { id: number; image_url: string }[]
-  >(mockData.response);
+  >([]);
+
+  //api states
+  const [messageId, setMessageId] = useState<string>();
+  const [buttonMessageId, setButtonMessageId] = useState<string>();
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value as string);
   };
 
   const handleSendButtonClick = async () => {
-    console.log("res");
-    const res = await sendTextToMidjourney(inputText);
+    setClicked(true);
+    setLoading(true);
+    const res = await sendTextToMidjourney(inputText).then((res) => {
+      setMessageId(res.messageId);
+    });
 
     console.log(res);
 
-    setClicked(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setLoading(false);
   };
+
+  useEffect(() => {
+    let intervalId: any;
+
+    const fetchData = async () => {
+      if (messageId !== null) {
+        try {
+          const data = await getPictures(messageId as string);
+          if (data.progress < 100) {
+            // If the process is less than 100, set a new interval
+            intervalId = setInterval(fetchData, 3000); // Send the request every 3 seconds
+          } else if (data.progress === 100) {
+            setPhotoToRender(data.response.imageUrls);
+            setButtonMessageId(data.response.buttonMessageId);
+          } else {
+            // If the process is 100 or more, clear the interval
+            clearInterval(intervalId);
+          }
+        } catch (error) {
+          // Handle errors here
+          console.error(error);
+        }
+      }
+    };
+
+    if (clicked) {
+      fetchData(); // Start fetching data when the button is clicked
+    }
+
+    return () => {
+      // Cleanup: clear the interval when the component unmounts or messageId changes
+      clearInterval(intervalId);
+    };
+  }, [messageId]);
 
   type VersionKey = keyof typeof mockData.versions;
 
@@ -94,7 +125,9 @@ const App = () => {
               onInputChange(e as React.ChangeEvent<HTMLInputElement>)
             }
           />
-          <Button onClick={handleSendButtonClick}>send</Button>
+          <Button onClick={handleSendButtonClick} disabled={!inputText.length}>
+            send
+          </Button>
           {renderButtons()}
         </InputSide>
         <PhotosSide>
@@ -104,7 +137,13 @@ const App = () => {
                 <div> Loading...</div>
               ) : (
                 photoToRender.map((photo) => {
-                  return <Photo url={photo.image_url} id={photo.id} />;
+                  return (
+                    <Photo
+                      url={photo.image_url}
+                      id={photo.id}
+                      key={photo.image_url}
+                    />
+                  );
                 })
               )}
             </AllPhotos>
