@@ -1,0 +1,73 @@
+{
+  "response": [
+    {
+      "id": 1,
+      "image_url": "https://media.istockphoto.com/id/1447762827/photo/tree-with-sun-rays-and-green-lawn-in-the-park-in-fulda-hessen-germany.jpg?s=2048x2048&w=is&k=20&c=cgGegafN_qwGyPct5kUmMZHWEM_JEvxx52SJFtl_G20="
+    },
+    {
+      "id": 2,
+      "image_url": "https://media.istockphoto.com/id/1174320814/photo/tree-of-life.jpg?s=2048x2048&w=is&k=20&c=4D9yiu1U1ObUwX45vigZHOeJ4fxX76aB0gt_Io6_afs="
+    },
+    {
+      "id": 3,
+      "image_url": "https://media.istockphoto.com/id/1254338010/photo/autumn-landscape.jpg?s=2048x2048&w=is&k=20&c=mX4gjMynGi50pSxO04KLlJDaHcfD-rbpXLCtwjGacLI="
+    },
+    {
+      "id": 4,
+      "image_url": "https://media.istockphoto.com/id/1327992925/photo/lawn-and-trees-in-the-park-by-the-west-lake-in-hangzhou-china.jpg?s=2048x2048&w=is&k=20&c=879g8BIlxUZ2JUwdKUfKRk12ehkQ0OnrWwl10L82FDM="
+    }
+  ],
+  "versions": {
+    "v1": {
+      "id": 11,
+      "image_url": "https://media.istockphoto.com/id/1138117580/photo/outdoor-blue-sky-white-clouds-grassland.jpg?s=2048x2048&w=is&k=20&c=PDbW4o5CSR5iwEmDecqpP-ifFuo3yhXv_B5lqNZjJ30="
+    },
+    "v2": {
+      "id": 12,
+      "image_url": "https://media.istockphoto.com/id/1162613265/photo/lonely-linden-on-a-green-field-in-the-rays-of-the-sun.jpg?s=2048x2048&w=is&k=20&c=R1SWbdsumUfdgLFHIdk-hFtLZfQN2HNp3-tWo_BwehQ="
+    },
+    "v3": {
+      "id": 13,
+      "image_url": "https://media.istockphoto.com/id/1327993281/photo/lawn-and-trees-in-the-park-by-the-west-lake-in-hangzhou-china.jpg?s=2048x2048&w=is&k=20&c=H_QvCtHcm77vmEURLKtwMYFCJtmEH7S0MhOROJGdBdQ="
+    },
+    "v4": {
+      "id": 14,
+      "image_url": "https://media.istockphoto.com/id/1487726452/photo/beautiful-sunset.jpg?s=2048x2048&w=is&k=20&c=J4zpw_QA8RbfX9MsPMCi2jb1AEWa_CJYiM6MLkCy_uM="
+    },
+    "u1": {
+      "id": 21,
+      "image_url": "https://media.istockphoto.com/id/1138117580/photo/outdoor-blue-sky-white-clouds-grassland.jpg?s=2048x2048&w=is&k=20&c=PDbW4o5CSR5iwEmDecqpP-ifFuo3yhXv_B5lqNZjJ30="
+    },
+    "u2": {
+      "id": 22,
+      "image_url": "https://media.istockphoto.com/id/1162613265/photo/lonely-linden-on-a-green-field-in-the-rays-of-the-sun.jpg?s=2048x2048&w=is&k=20&c=R1SWbdsumUfdgLFHIdk-hFtLZfQN2HNp3-tWo_BwehQ="
+    },
+    "u3": {
+      "id": 23,
+      "image_url": "https://media.istockphoto.com/id/1327993281/photo/lawn-and-trees-in-the-park-by-the-west-lake-in-hangzhou-china.jpg?s=2048x2048&w=is&k=20&c=H_QvCtHcm77vmEURLKtwMYFCJtmEH7S0MhOROJGdBdQ="
+    },
+    "u4": {
+      "id": 24,
+      "image_url": "https://media.istockphoto.com/id/1487726452/photo/beautiful-sunset.jpg?s=2048x2048&w=is&k=20&c=J4zpw_QA8RbfX9MsPMCi2jb1AEWa_CJYiM6MLkCy_uM="
+    }
+  },
+  "refresh": [
+    {
+      "id": 1,
+      "image_url": "https://media.istockphoto.com/id/1447762827/photo/tree-with-sun-rays-and-green-lawn-in-the-park-in-fulda-hessen-germany.jpg?s=2048x2048&w=is&k=20&c=cgGegafN_qwGyPct5kUmMZHWEM_JEvxx52SJFtl_G20="
+    },
+    {
+      "id": 2,
+      "image_url": "https://media.istockphoto.com/id/1174320814/photo/tree-of-life.jpg?s=2048x2048&w=is&k=20&c=4D9yiu1U1ObUwX45vigZHOeJ4fxX76aB0gt_Io6_afs="
+    },
+    {
+      "id": 3,
+      "image_url": "https://media.istockphoto.com/id/1254338010/photo/autumn-landscape.jpg?s=2048x2048&w=is&k=20&c=mX4gjMynGi50pSxO04KLlJDaHcfD-rbpXLCtwjGacLI="
+    },
+    {
+      "id": 4,
+      "image_url": "https://media.istockphoto.com/id/1327992925/photo/lawn-and-trees-in-the-park-by-the-west-lake-in-hangzhou-china.jpg?s=2048x2048&w=is&k=20&c=879g8BIlxUZ2JUwdKUfKRk12ehkQ0OnrWwl10L82FDM="
+    }
+  ],
+  "buttons": ["v1", "v2", "v3", "v4", "refresh", "u1", "u2", "u3", "u4"]
+}
