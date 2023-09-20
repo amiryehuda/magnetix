@@ -12,7 +12,6 @@ import magnetixLogo from "./assets/photos/magnetix-logo.jpg";
 import mockData from "./mock/mock-data.json";
 import Photo from "./components/Photo/Photo";
 import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
-import { log } from "console";
 
 const App = () => {
   const [inputText, setInputText] = useState<string>("");
