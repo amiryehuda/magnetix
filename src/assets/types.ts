@@ -15,3 +15,8 @@ const AUTH_HEADERS = {
   Authorization: `Bearer ${AUTH_TOKEN}`,
   "Content-Type": "application/json",
 };
+
+export interface PhotoType {
+  id: number;
+  image_url: string;
+}

@@ -12,14 +12,13 @@ import magnetixLogo from "./assets/photos/magnetix-logo.jpg";
 import mockData from "./mock/mock-data.json";
 import Photo from "./components/Photo/Photo";
 import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
+import { PhotoType } from "./assets/types";
 
 const App = () => {
   const [inputText, setInputText] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [photoToRender, setPhotoToRender] = useState<
-    { id: number; image_url: string }[]
-  >([]);
+  const [photoToRender, setPhotoToRender] = useState<PhotoType[]>([]);
 
   //api states
   const [messageId, setMessageId] = useState<string>();
@@ -36,47 +35,43 @@ const App = () => {
       setMessageId(res.messageId);
     });
 
-    console.log(res);
+    console.log("handleSendButtonClick: ", res);
 
     setLoading(false);
   };
 
   useEffect(() => {
-    let intervalId: any;
+    let intervalId: NodeJS.Timeout | undefined;
 
     const fetchData = async () => {
       if (messageId !== null) {
         try {
           const data = await getPictures(messageId as string);
-          console.log(data);
+          console.log("getPictures: ", data);
 
           if (data.progress < 100) {
-            // If the progress is less than 100, set a new interval
-            intervalId = setInterval(fetchData, 5000); // Send the request every 3 seconds
+            intervalId = setInterval(fetchData, 5000);
           } else if (data.progress === 100) {
-            // If the progress is 100 , set the images
             setPhotoToRender(data.response.imageUrls);
             setButtonMessageId(data.response.buttonMessageId);
           } else {
-            // If the progress is 100 or more, clear the interval
             clearInterval(intervalId);
           }
         } catch (error) {
-          // Handle errors here
           console.error(error);
         }
       }
     };
 
     if (clicked) {
-      fetchData(); // Start fetching data when the button is clicked
+      fetchData();
     }
 
     return () => {
       // Cleanup: clear the interval when the component unmounts or messageId changes
       clearInterval(intervalId);
     };
-  }, [messageId]);
+  }, [messageId, clicked]);
 
   type VersionKey = keyof typeof mockData.versions;
 
