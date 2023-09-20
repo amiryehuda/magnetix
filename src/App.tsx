@@ -48,6 +48,8 @@ const App = () => {
       if (messageId !== null) {
         try {
           const data = await getPictures(messageId as string);
+          console.log(data);
+
           if (data.progress < 100) {
             // If the progress is less than 100, set a new interval
             intervalId = setInterval(fetchData, 5000); // Send the request every 3 seconds
