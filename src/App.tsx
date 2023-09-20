@@ -49,13 +49,14 @@ const App = () => {
         try {
           const data = await getPictures(messageId as string);
           if (data.progress < 100) {
-            // If the process is less than 100, set a new interval
-            intervalId = setInterval(fetchData, 3000); // Send the request every 3 seconds
+            // If the progress is less than 100, set a new interval
+            intervalId = setInterval(fetchData, 5000); // Send the request every 3 seconds
           } else if (data.progress === 100) {
+            // If the progress is 100 , set the images
             setPhotoToRender(data.response.imageUrls);
             setButtonMessageId(data.response.buttonMessageId);
           } else {
-            // If the process is 100 or more, clear the interval
+            // If the progress is 100 or more, clear the interval
             clearInterval(intervalId);
           }
         } catch (error) {
