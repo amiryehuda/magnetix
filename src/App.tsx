@@ -21,7 +21,7 @@ const App = () => {
   const [photoToRender, setPhotoToRender] = useState<PhotoType[]>([]);
 
   //api states
-  const [messageId, setMessageId] = useState<string>();
+  const [messageId, setMessageId] = useState<string | null>(null);
   const [buttonMessageId, setButtonMessageId] = useState<string>();
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
