@@ -12,7 +12,7 @@ import magnetixLogo from "./assets/photos/magnetix-logo.jpg";
 import mockData from "./mock/mock-data.json";
 import Photo from "./components/Photo/Photo";
 import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
-import { PhotoType } from "./assets/types";
+// import { PhotoType } from "./assets/types";
 import { sleep } from "./app/api/assets/utils";
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
   const [inputText, setInputText] = useState<string>("a cat eat a banana");
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
-  const [photoToRender, setPhotoToRender] = useState<PhotoType[]>([]);
+  const [photoToRender, setPhotoToRender] = useState<string[]>([]);
 
   //api states
   const [messageId, setMessageId] = useState<string | null>(null);
@@ -64,9 +64,9 @@ const App = () => {
 
   const handleVersiovButtonClick = async (value: VersionKey) => {
     if (value === ("refresh" as VersionKey)) {
-      setPhotoToRender(mockData.refresh);
+      // setPhotoToRender(mockData.refresh);
     } else {
-      setPhotoToRender([mockData.versions[value]]);
+      // setPhotoToRender([mockData.versions[value]]);
     }
   };
 
