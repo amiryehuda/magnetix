@@ -45,20 +45,16 @@ const App = () => {
     const fetchData = async () => {
       await sleep(5000);
       if (messageId && !requestMade) {
-        try {
-          console.error("messageId:", messageId);
+        console.error("messageId:", messageId);
 
-          setRequestMade(true);
-          await getPictures(messageId as string).then((response) => {
-            console.log("fetchData: ", response);
-            if (response) {
-              setPhotoToRender(response.response.imageUrls);
-              setButtonMessageId(response.response.buttonMessageId);
-            }
-          });
-        } catch (error) {
-          console.error("Error fetching pictures:", error);
-        }
+        setRequestMade(true);
+        await getPictures(messageId as string).then((res) => {
+          console.log("fetchData: ", res);
+          if (res) {
+            setPhotoToRender(res.response.imageUrls);
+            setButtonMessageId(res.response.buttonMessageId);
+          }
+        });
       }
     };
 
