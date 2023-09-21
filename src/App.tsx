@@ -41,6 +41,8 @@ const App = () => {
   };
 
   useEffect(() => {
+    console.log("useEffect");
+
     const fetchData = async () => {
       if (messageId && !requestMade) {
         try {
