@@ -12,3 +12,7 @@ export const AUTH_TOKEN = "c3adc52a-4d66-49a1-bcd5-5bfabc4748b1";
 export const AUTH_HEADERS = {
   Authorization: `Bearer ${AUTH_TOKEN}`,
 };
+
+function sleep(milliseconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}

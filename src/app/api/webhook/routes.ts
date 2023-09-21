@@ -4,15 +4,13 @@ import { BASE_URL, AUTH_TOKEN, AUTH_HEADERS } from "../assets/utils";
 export const sendTextToMidjourney = async (text: string) => {
   try {
     const response = await axios.post(
-      BASE_URL, // Replace with the actual API endpoint
+      BASE_URL,
       { cmd: "imagine", msg: text },
       {
         headers: AUTH_HEADERS,
       }
     );
 
-    // Assuming the API returns a URL to the generated picture, you can access it from response.data
-    // const generatedPictureUrl = response.data.pictureUrl;
     const generatedPictureUrl = response.data;
     return generatedPictureUrl;
   } catch (error) {

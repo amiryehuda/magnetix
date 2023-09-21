@@ -15,6 +15,7 @@ import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
 import { PhotoType } from "./assets/types";
 
 const App = () => {
+  type VersionKey = keyof typeof mockData.versions;
   const [inputText, setInputText] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
@@ -31,11 +32,10 @@ const App = () => {
   const handleSendButtonClick = async () => {
     setClicked(true);
     setLoading(true);
-    const res = await sendTextToMidjourney(inputText).then((res) => {
+    await sendTextToMidjourney(inputText).then((res) => {
       setMessageId(res.messageId);
+      console.log(res);
     });
-
-    console.log("handleSendButtonClick: ", res);
 
     setLoading(false);
   };
@@ -44,14 +44,16 @@ const App = () => {
     let intervalId: NodeJS.Timeout | undefined;
 
     const fetchData = async () => {
-      if (messageId !== null) {
+      if (messageId) {
         try {
+          console.log("befor getPictures ");
           const data = await getPictures(messageId as string);
-          console.log("getPictures: ", data);
+          // console.log("getPictures: ", data);
+          console.log("urls: ", data.response.imageUrls);
 
-          if (data.progress < 100) {
+          if (data.progress < 100 && data) {
             intervalId = setInterval(fetchData, 5000);
-          } else if (data.progress === 100) {
+          } else if (data.progress === 100 && data) {
             setPhotoToRender(data.response.imageUrls);
             setButtonMessageId(data.response.buttonMessageId);
           } else {
@@ -73,8 +75,6 @@ const App = () => {
     };
   }, [messageId, clicked]);
 
-  type VersionKey = keyof typeof mockData.versions;
-
   const handleVersiovButtonClick = async (value: VersionKey) => {
     if (value === ("refresh" as VersionKey)) {
       setPhotoToRender(mockData.refresh);
@@ -82,6 +82,7 @@ const App = () => {
       setPhotoToRender([mockData.versions[value]]);
     }
   };
+  console.log("photoToRender: ", photoToRender);
 
   const renderButtons = () => {
     return clicked ? (
@@ -133,12 +134,12 @@ const App = () => {
               {loading ? (
                 <div> Loading...</div>
               ) : (
-                photoToRender.map((photo) => {
+                photoToRender.map((photo, index) => {
                   return (
                     <Photo
                       url={photo.image_url}
                       id={photo.id}
-                      key={photo.image_url}
+                      key={`picture-${index}`}
                     />
                   );
                 })
