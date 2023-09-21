@@ -50,11 +50,11 @@ const App = () => {
           console.error("messageId:", messageId);
 
           setRequestMade(true);
-          const data = await getPictures(messageId as string);
-          console.log(data);
-
-          setPhotoToRender(data.response.imageUrls);
-          setButtonMessageId(data.response.buttonMessageId);
+          await getPictures(messageId as string).then((response) => {
+            console.log(response);
+            setPhotoToRender(response.response.imageUrls);
+            setButtonMessageId(response.response.buttonMessageId);
+          });
         } catch (error) {
           console.error("Error fetching pictures:", error);
         }
