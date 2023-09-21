@@ -43,7 +43,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await sleep(5000);
+      await sleep(10000);
       if (messageId && !requestMade) {
         console.error("messageId:", messageId);
 
