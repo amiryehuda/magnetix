@@ -42,7 +42,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     const fetchData = async () => {
       await sleep(3000);
       if (messageId && !requestMade) {
@@ -51,7 +50,7 @@ const App = () => {
 
           setRequestMade(true);
           await getPictures(messageId as string).then((response) => {
-            console.log(response);
+            console.log("fetchData: ", response);
             setPhotoToRender(response.response.imageUrls);
             setButtonMessageId(response.response.buttonMessageId);
           });
