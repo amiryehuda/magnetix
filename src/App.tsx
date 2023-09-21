@@ -24,6 +24,7 @@ const App = () => {
   //api states
   const [messageId, setMessageId] = useState<string | null>(null);
   const [buttonMessageId, setButtonMessageId] = useState<string>();
+  const [requestMade, setRequestMade] = useState(false);
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value as string);
@@ -34,33 +35,21 @@ const App = () => {
     setLoading(true);
     await sendTextToMidjourney(inputText).then((res) => {
       setMessageId(res.messageId);
-      console.log(res);
     });
 
     setLoading(false);
   };
 
   useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
-
     const fetchData = async () => {
-      if (messageId) {
+      if (messageId && !requestMade) {
         try {
-          console.log("befor getPictures ");
+          setRequestMade(true);
           const data = await getPictures(messageId as string);
-          // console.log("getPictures: ", data);
-          console.log("urls: ", data.response.imageUrls);
-
-          if (data.progress < 100 && data) {
-            intervalId = setInterval(fetchData, 5000);
-          } else if (data.progress === 100 && data) {
-            setPhotoToRender(data.response.imageUrls);
-            setButtonMessageId(data.response.buttonMessageId);
-          } else {
-            clearInterval(intervalId);
-          }
+          setPhotoToRender(data.response.imageUrls);
+          setButtonMessageId(data.response.buttonMessageId);
         } catch (error) {
-          console.error(error);
+          console.error("Error fetching pictures:", error);
         }
       }
     };
@@ -68,11 +57,6 @@ const App = () => {
     if (clicked) {
       fetchData();
     }
-
-    return () => {
-      // Cleanup: clear the interval when the component unmounts or messageId changes
-      clearInterval(intervalId);
-    };
   }, [messageId, clicked]);
 
   const handleVersiovButtonClick = async (value: VersionKey) => {
@@ -82,7 +66,6 @@ const App = () => {
       setPhotoToRender([mockData.versions[value]]);
     }
   };
-  console.log("photoToRender: ", photoToRender);
 
   const renderButtons = () => {
     return clicked ? (
@@ -155,3 +138,40 @@ const App = () => {
 };
 
 export default App;
+
+/*
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout | undefined;
+
+    const fetchData = async () => {
+      if (messageId) {
+        try {
+          console.log("befor getPictures ");
+          const data = await getPictures(messageId as string);
+          // console.log("getPictures: ", data);
+          console.log("urls: ", data.response.imageUrls);
+
+          if (data.progress < 100 && data) {
+            intervalId = setInterval(fetchData, 5000);
+          } else if (data.progress === 100 && data) {
+            setPhotoToRender(data.response.imageUrls);
+            setButtonMessageId(data.response.buttonMessageId);
+          } else {
+            clearInterval(intervalId);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    if (clicked) {
+      fetchData();
+    }
+
+    return () => {
+      // Cleanup: clear the interval when the component unmounts or messageId changes
+      clearInterval(intervalId);
+    };
+  }, [messageId, clicked]);
+*/

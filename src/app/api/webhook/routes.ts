@@ -28,7 +28,11 @@ export const getPictures = async (messageId: string) => {
       },
     });
 
-    return response.data;
+    if (response.data.progress < 100) {
+      setTimeout(getPictures, 5000);
+    } else {
+      return response.data;
+    }
   } catch (error) {
     console.error("Error get request:", error);
     throw error;
