@@ -22,26 +22,10 @@ export const sendTextToMidjourney = async (text: string) => {
 };
 
 export const getPictures = async (messageId: string) => {
-  // var config = {
-  //   method: "get",
-  //   url: `${BASE_URL}/message/${messageId}`,
-  //   headers: {
-  //     Authorization: `Bearer ${AUTH_TOKEN}`,
-  //   },
-  // };
-
   try {
-    // axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //     return response.data;
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
     const response = await axios.get(`${BASE_URL}/message/${messageId}`, {
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
         Authorization: `Bearer ${AUTH_TOKEN}`,
       },
     });
@@ -53,6 +37,6 @@ export const getPictures = async (messageId: string) => {
   }
 };
 
-export const pressOnVersionButton = async (buttonMessageId: string) => {
-  const response = await axios.get(`${BASE_URL}/button/${buttonMessageId}`);
-};
+// export const pressOnVersionButton = async (buttonMessageId: string) => {
+//   const response = await axios.get(`${BASE_URL}/button/${buttonMessageId}`);
+// };
