@@ -51,6 +51,9 @@ const App = () => {
         await getPictures(messageId as string).then((res) => {
           console.log("fetchData: ", res);
           if (res) {
+            console.log("in res if block: ", res);
+            console.log("in res imageUrls: ", res.response.imageUrls);
+
             setPhotoToRender(res.response.imageUrls);
             setButtonMessageId(res.response.buttonMessageId);
           }
