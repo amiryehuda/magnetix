@@ -61,6 +61,10 @@ const App = () => {
     fetchData();
   }, [messageId]);
 
+  useEffect(() => {
+    console.log(photoToRender);
+  }, [photoToRender]);
+
   const handleVersiovButtonClick = async (value: VersionKey) => {
     if (value === ("refresh" as VersionKey)) {
       // setPhotoToRender(mockData.refresh);
