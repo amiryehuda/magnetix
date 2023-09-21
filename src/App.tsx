@@ -51,6 +51,8 @@ const App = () => {
 
           setRequestMade(true);
           const data = await getPictures(messageId as string);
+          console.log(data);
+
           setPhotoToRender(data.response.imageUrls);
           setButtonMessageId(data.response.buttonMessageId);
         } catch (error) {
