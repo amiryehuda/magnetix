@@ -21,6 +21,8 @@ export const sendTextToMidjourney = async (text: string) => {
 
 export const getPictures = async (messageId: string) => {
   try {
+    console.log(messageId);
+
     const response = await axios.get(`${BASE_URL}/message/${messageId}`, {
       headers: {
         // "Content-Type": "application/json",

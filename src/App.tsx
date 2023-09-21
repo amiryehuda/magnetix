@@ -46,8 +46,13 @@ const App = () => {
     const fetchData = async () => {
       if (messageId && !requestMade) {
         try {
-          console.error("messageId:", messageId);
-          console.error("requestMade", requestMade);
+          console.error("messageId:", messageId, "typeof: ", typeof messageId);
+          console.error(
+            "requestMade",
+            requestMade,
+            "typeof: ",
+            typeof requestMade
+          );
           setRequestMade(true);
           const data = await getPictures(messageId as string);
           setPhotoToRender(data.response.imageUrls);
