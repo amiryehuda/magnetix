@@ -123,8 +123,8 @@ const App = () => {
                 photoToRender.map((photo, index) => {
                   return (
                     <Photo
-                      url={photo.image_url}
-                      id={photo.id}
+                      url={photo as any}
+                      id={index}
                       key={`picture-${index}`}
                     />
                   );
