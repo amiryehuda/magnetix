@@ -13,6 +13,6 @@ export const AUTH_HEADERS = {
   Authorization: `Bearer ${AUTH_TOKEN}`,
 };
 
-function sleep(milliseconds: number) {
+export function sleep(milliseconds: number) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }

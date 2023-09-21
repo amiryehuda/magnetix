@@ -13,10 +13,11 @@ import mockData from "./mock/mock-data.json";
 import Photo from "./components/Photo/Photo";
 import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
 import { PhotoType } from "./assets/types";
+import { sleep } from "./app/api/assets/utils";
 
 const App = () => {
   type VersionKey = keyof typeof mockData.versions;
-  const [inputText, setInputText] = useState<string>("");
+  const [inputText, setInputText] = useState<string>("a cat eat a banana");
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [photoToRender, setPhotoToRender] = useState<PhotoType[]>([]);
@@ -42,17 +43,12 @@ const App = () => {
 
   useEffect(() => {
     console.log("useEffect");
-
     const fetchData = async () => {
+      await sleep(3000);
       if (messageId && !requestMade) {
         try {
-          console.error("messageId:", messageId, "typeof: ", typeof messageId);
-          console.error(
-            "requestMade",
-            requestMade,
-            "typeof: ",
-            typeof requestMade
-          );
+          console.error("messageId:", messageId);
+
           setRequestMade(true);
           const data = await getPictures(messageId as string);
           setPhotoToRender(data.response.imageUrls);
@@ -63,10 +59,8 @@ const App = () => {
       }
     };
 
-    if (clicked) {
-      fetchData();
-    }
-  }, [messageId, clicked]);
+    fetchData();
+  }, [messageId]);
 
   const handleVersiovButtonClick = async (value: VersionKey) => {
     if (value === ("refresh" as VersionKey)) {

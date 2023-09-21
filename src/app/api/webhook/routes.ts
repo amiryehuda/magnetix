@@ -21,18 +21,17 @@ export const sendTextToMidjourney = async (text: string) => {
 
 export const getPictures = async (messageId: string) => {
   try {
-    console.log(messageId);
-
     const response = await axios.get(`${BASE_URL}/message/${messageId}`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${AUTH_TOKEN}`,
+        "Content-Type": "application/json",
       },
     });
 
     if (response.data.progress < 100) {
       setTimeout(getPictures, 5000);
     } else {
+      //????????????????????????????????????
       return response.data;
     }
   } catch (error) {
