@@ -42,12 +42,12 @@ const App = () => {
 
   useEffect(() => {
     console.log("useEffect");
-    console.error("messageId:", messageId);
-    console.error("requestMade", requestMade);
 
     const fetchData = async () => {
       if (messageId && !requestMade) {
         try {
+          console.error("messageId:", messageId);
+          console.error("requestMade", requestMade);
           setRequestMade(true);
           const data = await getPictures(messageId as string);
           setPhotoToRender(data.response.imageUrls);
