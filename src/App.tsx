@@ -42,6 +42,8 @@ const App = () => {
 
   useEffect(() => {
     console.log("useEffect");
+    console.error("messageId:", messageId);
+    console.error("requestMade", requestMade);
 
     const fetchData = async () => {
       if (messageId && !requestMade) {
