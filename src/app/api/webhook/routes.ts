@@ -25,7 +25,7 @@ export const getPictures = async (messageId: string) => {
 
     const response = await axios.get(`${BASE_URL}/message/${messageId}`, {
       headers: {
-        // "Content-Type": "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${AUTH_TOKEN}`,
       },
     });
