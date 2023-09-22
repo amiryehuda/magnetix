@@ -56,8 +56,8 @@ const App = () => {
           } else {
             console.log("in: ", response);
 
-            setPhotoToRender(response.imageUrls);
-            setButtonMessageId(response.buttonMessageId);
+            setPhotoToRender(response.response.imageUrls);
+            setButtonMessageId(response.response.buttonMessageId);
           }
         }
       });
