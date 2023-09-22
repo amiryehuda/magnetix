@@ -27,13 +27,7 @@ export const getPictures = async (messageId: string) => {
         "Content-Type": "application/json",
       },
     });
-
-    if (response.data.progress < 100) {
-      setTimeout(() => getPictures(messageId), 5000);
-    } else {
-      console.log("getPictures: ", response.data);
-      return response.data;
-    }
+    return response.data;
   } catch (error) {
     console.error("Error get request:", error);
     throw error;

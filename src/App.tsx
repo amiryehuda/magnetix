@@ -43,16 +43,17 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await sleep(10000);
+      await sleep(7000);
       if (messageId && !requestMade) {
         setRequestMade(true);
-        const data = await getPictures(messageId as string);
-        console.log(" data out if block: ", data);
-        if (data) {
-          console.log("in data imageUrls: ", data.response.imageUrls);
 
-          setPhotoToRender(data.response.imageUrls);
-          setButtonMessageId(data.response.buttonMessageId);
+        const response = await getPictures(messageId as string);
+        if (response.progress < 100) {
+          // setTimeout(fetchData, 5000);
+          fetchData();
+        } else {
+          setPhotoToRender(response.imageUrls);
+          setButtonMessageId(response.buttonMessageId);
         }
       }
     };
