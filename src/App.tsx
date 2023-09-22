@@ -43,19 +43,20 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await sleep(10000);
-      if (messageId && !requestMade) {
-        setRequestMade(true);
+      await sleep(10000).then(async () => {
+        if (messageId && !requestMade) {
+          setRequestMade(true);
 
-        const response = await getPictures(messageId as string);
-        if (response.progress < 100) {
-          // setTimeout(fetchData, 5000);
-          fetchData();
-        } else {
-          setPhotoToRender(response.imageUrls);
-          setButtonMessageId(response.buttonMessageId);
+          const response = await getPictures(messageId as string);
+          if (response.progress < 100) {
+            // setTimeout(fetchData, 5000);
+            fetchData();
+          } else {
+            setPhotoToRender(response.imageUrls);
+            setButtonMessageId(response.buttonMessageId);
+          }
         }
-      }
+      });
     };
 
     fetchData();
