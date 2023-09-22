@@ -47,8 +47,8 @@ const App = () => {
       if (messageId && !requestMade) {
         setRequestMade(true);
         const data = await getPictures(messageId as string);
+        console.log(" data out if block: ", data);
         if (data) {
-          console.log("in data if block: ", data);
           console.log("in data imageUrls: ", data.response.imageUrls);
 
           setPhotoToRender(data.response.imageUrls);
