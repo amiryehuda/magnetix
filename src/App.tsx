@@ -48,10 +48,14 @@ const App = () => {
           setRequestMade(true);
 
           const response = await getPictures(messageId as string);
+          console.log("out: ", response);
+
           if (response.progress < 100) {
             // setTimeout(fetchData, 5000);
             fetchData();
           } else {
+            console.log("in: ", response);
+
             setPhotoToRender(response.imageUrls);
             setButtonMessageId(response.buttonMessageId);
           }
