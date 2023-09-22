@@ -45,19 +45,15 @@ const App = () => {
     const fetchData = async () => {
       await sleep(10000);
       if (messageId && !requestMade) {
-        console.error("messageId:", messageId);
-
         setRequestMade(true);
-        await getPictures(messageId as string).then((res) => {
-          console.log("fetchData: ", res);
-          if (res) {
-            console.log("in res if block: ", res);
-            console.log("in res imageUrls: ", res.response.imageUrls);
+        const data = await getPictures(messageId as string);
+        if (data) {
+          console.log("in data if block: ", data);
+          console.log("in data imageUrls: ", data.response.imageUrls);
 
-            setPhotoToRender(res.response.imageUrls);
-            setButtonMessageId(res.response.buttonMessageId);
-          }
-        });
+          setPhotoToRender(data.response.imageUrls);
+          setButtonMessageId(data.response.buttonMessageId);
+        }
       }
     };
 
