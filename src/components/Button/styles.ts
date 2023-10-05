@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import { buttonTypes } from "./Button";
 import {
+  LABELS_COLORS,
   NEUTRAL_SHADES,
   PRIMARY_COLOR,
   PRIMARY_SHADES,
@@ -21,14 +22,14 @@ export const buttonStyle = {
     backgroundColor: NEUTRAL_SHADES[200],
   },
   primary: {
-    backgroundColor: PRIMARY_COLOR,
+    backgroundColor: LABELS_COLORS.BLUE,
     border: `1px solid transparent`,
     boxShadow: "none",
     "&:hover:not(.Mui-disabled)": {
-      backgroundColor: PRIMARY_SHADES[800],
+      backgroundColor: LABELS_COLORS.Hover_BLUE,
     },
     "&:focus:not(.Mui-disabled)": {
-      backgroundColor: PRIMARY_SHADES[900],
+      backgroundColor: LABELS_COLORS.Dark_BLUE,
     },
     "&&.MuiLoadingButton-loading": {
       backgroundColor: PRIMARY_COLOR,

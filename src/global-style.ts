@@ -136,7 +136,9 @@ export const LABELS_COLORS = {
   LIGHTBLUE: "#E2FEF8",
   LIGHTPURPLE: "#E6E2FE",
   ORANGE: "#FFE3D3",
-  BLUE: "#D5EBFF",
+  BLUE: "#3457D5",
+  Hover_BLUE: "#0047AB",
+  Dark_BLUE: "#0039a6",
 };
 
 export const ALERT_ICON_COLORS = {
@@ -214,7 +216,7 @@ export const AppWrapper = styled.div`
   min-height: 100vh;
   max-width: 100%;
   font-size: 16px;
-  background-color: ${NEUTRAL_SHADES[100]};
+  /* background-color: ${NEUTRAL_SHADES[100]}; */
   font-family: "Open Sans", sans-serif;
   display: flex;
   justify-content: center;
@@ -229,8 +231,8 @@ export const Container = styled.div`
 export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  flex-direction: row;
-  padding-bottom: 20px;
+  flex-direction: row-reverse;
+  padding: 6px 40px;
   width: 100%;
   max-width: 1280px;
 `;

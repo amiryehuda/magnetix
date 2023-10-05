@@ -4,7 +4,7 @@ import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 import * as ImportedIcon from "./svgFiles";
 import { iconStylesDictionary, StyledIconProps } from "./styles";
 
-export type iconTypes = "elevator" | "error";
+export type iconTypes = "elevator" | "error" | "close";
 
 export interface IconProps {
   colorIcon?: string;

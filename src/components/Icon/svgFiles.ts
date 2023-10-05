@@ -1,1 +1,1 @@
-export { ReactComponent as elevator } from "../../assets/icons/icon_elevator.svg";
+export { ReactComponent as close } from "../../assets/icons/close.svg";

@@ -5,22 +5,35 @@ import {
   AllPhotos,
   AppLayout,
   ContentArea,
+  Divider,
   InputSide,
   PhotosSide,
 } from "./App-style";
 import magnetixLogo from "./assets/photos/magnetix-logo.jpg";
 import mockData from "./mock/mock-data.json";
 import Photo from "./components/Photo/Photo";
-import { sendTextToMidjourney, getPictures } from "./app/api/webhook/routes";
-// import { PhotoType } from "./assets/types";
+import {
+  sendTextToMidjourney,
+  getPictures,
+  chooseOnVersionButton,
+} from "./app/api/webhook/routes";
 import { sleep } from "./app/api/assets/utils";
+import { Tooltip } from "./components/Tooltip/Tooltip";
+import InfoPopup from "./components/Popup/InfoPopup/InfoPopup";
+import { HeaderWrapper } from "./global-style";
+import Typography from "./components/Typography/Typography";
 
 const App = () => {
   type VersionKey = keyof typeof mockData.versions;
   const [inputText, setInputText] = useState<string>("a cat eat a banana");
   const [loading, setLoading] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [photoToRender, setPhotoToRender] = useState<string[]>([]);
+  const [chosenPhoto, setChosenPhoto] = useState<{ url: string; id: number }>({
+    url: "",
+    id: 0,
+  });
 
   //api states
   const [messageId, setMessageId] = useState<string | null>(null);
@@ -37,6 +50,7 @@ const App = () => {
     await sendTextToMidjourney(inputText).then((res) => {
       setMessageId(res.messageId);
     });
+    // setPhotoToRender(mockData.photos);
 
     setLoading(false);
   };
@@ -46,22 +60,20 @@ const App = () => {
       await sleep(10000).then(async () => {
         if (messageId && !requestMade) {
           setRequestMade(true);
-
           const response = await getPictures(messageId as string);
           console.log("out: ", response);
-
           if (response.progress < 100) {
             // setTimeout(fetchData, 5000);
             fetchData();
           } else {
             console.log("in: ", response);
-
             setPhotoToRender(response.response.imageUrls);
             setButtonMessageId(response.response.buttonMessageId);
           }
         }
       });
     };
+    setRequestMade(false);
 
     fetchData();
   }, [messageId]);
@@ -72,27 +84,61 @@ const App = () => {
 
   const handleVersiovButtonClick = async (value: VersionKey) => {
     if (value === ("refresh" as VersionKey)) {
+      handleSendButtonClick();
       // setPhotoToRender(mockData.refresh);
-    } else {
+    } else if (value.includes("u")) {
+      //chooseOnVersionButton()
+      setPhotoToRender([photoToRender[parseInt(value.slice(-1)) - 1]]);
+      // setPhotoToRender([mockData.photos[parseInt(value.slice(-1)) - 1]]);
       // setPhotoToRender([mockData.versions[value]]);
+    } else if (value.includes("v")) {
+      buttonMessageId &&
+        chooseOnVersionButton(buttonMessageId, value.toUpperCase()).then(
+          (response) => {
+            setMessageId(response.messageId);
+          }
+        );
+      // console.log(value.toUpperCase());
+
+      //get request for v buttons
     }
   };
-
+  const renderTooltipText = (buttonType: string) => {
+    if (buttonType.includes("u")) {
+      return "u";
+    } else if (buttonType.includes("v")) {
+      return "v";
+    } else {
+      return "refresh";
+    }
+  };
   const renderButtons = () => {
     return clicked ? (
       !loading && (
-        <div style={{ display: "flex", gap: 4, paddingTop: 40 }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "10px 16px",
+            width: 384,
+          }}
+        >
           {mockData.buttons.map((buttonType) => {
             return (
-              <Button
-                value={buttonType}
-                onClick={() =>
-                  handleVersiovButtonClick(buttonType as VersionKey)
-                }
-                key={buttonType}
-              >
-                {buttonType === "refresh" ? "ref" : buttonType}
-              </Button>
+              <Tooltip title={renderTooltipText(buttonType)}>
+                <div>
+                  <Button
+                    value={buttonType.toUpperCase()}
+                    style={{ height: 40, width: 52 }}
+                    onClick={() =>
+                      handleVersiovButtonClick(buttonType as VersionKey)
+                    }
+                    key={buttonType}
+                  >
+                    {buttonType === "refresh" ? "ref" : buttonType}
+                  </Button>
+                </div>
+              </Tooltip>
             );
           })}
         </div>
@@ -102,14 +148,48 @@ const App = () => {
     );
   };
 
+  const onPhotoClick = (url: string, id: number) => {
+    setIsPopupOpen(true);
+    setChosenPhoto({ url: url, id: id });
+  };
+
   return (
     <AppLayout>
-      <img src={magnetixLogo} alt="magnetix logo" />
+      <HeaderWrapper>
+        <img
+          src={magnetixLogo}
+          alt="magnetix logo"
+          style={{ height: 40, width: 160 }}
+        />
+      </HeaderWrapper>
       <ContentArea>
+        <PhotosSide>
+          <Typography>תוצאות</Typography>
+          <AllPhotos>
+            {loading ? (
+              <div> Loading...</div>
+            ) : (
+              photoToRender.map((photo, index) => {
+                return (
+                  <div onClick={() => onPhotoClick(photo, index + 1)}>
+                    <Photo
+                      url={photo as any}
+                      id={index + 1}
+                      key={`picture-${index}`}
+                    />
+                  </div>
+                );
+              })
+            )}
+            {renderButtons()}
+          </AllPhotos>
+        </PhotosSide>
+        <Divider />
         <InputSide>
+          <Typography>יצירת תמונה</Typography>
           <Input
-            sx={{ width: "600px" }}
-            customeHeight={200}
+            sx={{ width: "100%", maxWidth: "644px" }}
+            customeHeight={230}
             rows={8}
             value={inputText}
             placeholder="Create your photo"
@@ -120,69 +200,27 @@ const App = () => {
           <Button onClick={handleSendButtonClick} disabled={!inputText.length}>
             send
           </Button>
-          {renderButtons()}
         </InputSide>
-        <PhotosSide>
-          {clicked ? (
-            <AllPhotos>
-              {loading ? (
-                <div> Loading...</div>
-              ) : (
-                photoToRender.map((photo, index) => {
-                  return (
-                    <Photo
-                      url={photo as any}
-                      id={index}
-                      key={`picture-${index}`}
-                    />
-                  );
-                })
-              )}
-            </AllPhotos>
-          ) : (
-            <div>creatr photos</div>
-          )}
-        </PhotosSide>
       </ContentArea>
+      <InfoPopup
+        customeWidth={400}
+        isOpen={isPopupOpen}
+        title={`photo number ${chosenPhoto?.id}`}
+        subtitle=""
+        body={
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <Photo
+              url={chosenPhoto?.url as any}
+              id={chosenPhoto?.id}
+              key={`picture-${chosenPhoto?.id}`}
+            />
+            <Button>send to print</Button>
+          </div>
+        }
+        onCloseHandler={() => setIsPopupOpen(false)}
+      />
     </AppLayout>
   );
 };
 
 export default App;
-
-/*
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
-
-    const fetchData = async () => {
-      if (messageId) {
-        try {
-          console.log("befor getPictures ");
-          const data = await getPictures(messageId as string);
-          // console.log("getPictures: ", data);
-          console.log("urls: ", data.response.imageUrls);
-
-          if (data.progress < 100 && data) {
-            intervalId = setInterval(fetchData, 5000);
-          } else if (data.progress === 100 && data) {
-            setPhotoToRender(data.response.imageUrls);
-            setButtonMessageId(data.response.buttonMessageId);
-          } else {
-            clearInterval(intervalId);
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-
-    if (clicked) {
-      fetchData();
-    }
-
-    return () => {
-      // Cleanup: clear the interval when the component unmounts or messageId changes
-      clearInterval(intervalId);
-    };
-  }, [messageId, clicked]);
-*/

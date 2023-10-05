@@ -69,5 +69,12 @@
       "image_url": "https://media.istockphoto.com/id/1327992925/photo/lawn-and-trees-in-the-park-by-the-west-lake-in-hangzhou-china.jpg?s=2048x2048&w=is&k=20&c=879g8BIlxUZ2JUwdKUfKRk12ehkQ0OnrWwl10L82FDM="
     }
   ],
+
+  "photos": [
+    "https://cdn.midjourney.com/56d67e05-9f44-4b5a-bbb7-31e0bdc6f30e/0_0.png",
+    "https://cdn.midjourney.com/56d67e05-9f44-4b5a-bbb7-31e0bdc6f30e/0_1.png",
+    "https://cdn.midjourney.com/56d67e05-9f44-4b5a-bbb7-31e0bdc6f30e/0_2.png",
+    "https://cdn.midjourney.com/56d67e05-9f44-4b5a-bbb7-31e0bdc6f30e/0_3.png"
+  ],
   "buttons": ["v1", "v2", "v3", "v4", "refresh", "u1", "u2", "u3", "u4"]
 }
